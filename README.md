@@ -2,7 +2,9 @@
 
 The goal of this style guide is to improve the readability of SQL queries.
 
-## Keywords
+## Formatting
+
+### Keywords
 
 * Keywords should be UPPERCASE.
 
@@ -14,7 +16,7 @@ The goal of this style guide is to improve the readability of SQL queries.
     select count(1) from tablename where 1;
     ```
 
-## Indentation and newlines
+### Indentation and newlines
 
 * Newlines should be used for any query that is at all complex or longer than 72 characters.
 
@@ -49,3 +51,40 @@ The goal of this style guide is to improve the readability of SQL queries.
     FROM tablename
     WHERE 1;
     ```
+
+* Subqueries should be aligned as though the open parenthesis were the 0-column
+  So, they should be indented as a unit, to identify them as subqueries.  They should continue to have the opening keywords right-aligned.
+
+    ```SQL
+    /* Good */
+    SELECT *
+      FROM (  SELECT a.name, count(1)
+                FROM tablea a
+                JOIN tableb b ON a.id = b.a_id
+            GROUP BY a.name) name_count
+      JOIN city c ON name_count.name = c.mayor;
+    
+    /* Bad */
+    SELECT *
+      FROM (SELECT a.name, count(1)
+        FROM tablea a
+        JOIN tableb b ON a.id = b.a_id
+        GROUP BY a.name) name_count
+      JOIN city c ON name_count.name = c.mayor;
+    ```   
+
+## Structure
+
+* Column aliases should always use the keyword AS
+  This becomes significant when a query has several columns selected with columns aliased.  Without the AS keyword, a dropped comma makes two columns become a single aliased column.
+
+    ```SQL
+    /* Good */
+    SELECT ebe_ebs_sox_flag_set_for_all_crs AS sox_ok
+      FROM tablename;
+    
+    /* Bad */
+    SELECT ebe_ebs_sox_flag_set_for_all_crs sox_ok
+      FROM tablename;
+    
+    ```    
