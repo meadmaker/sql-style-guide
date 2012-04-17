@@ -18,7 +18,7 @@ The goal of this style guide is to improve the readability of SQL queries.
 
 ### Names
 * Named objects should not be surrounded by backticks, no matter what MySQL says when it dumps the table structure for you.
-** If you need to use backticks because of something in your table name, rename your table.
+  *  If you need to use backticks because of something in your table name, rename your table.
 
 ### Indentation and newlines
 
@@ -124,5 +124,5 @@ The goal of this style guide is to improve the readability of SQL queries.
             JOIN table2 ON (table2.parent_id = table1.id) ) link;
   ```
 
-** Abbreviations don't help in subquery aliases
+  *  Abbreviations don't help in subquery aliases
 
