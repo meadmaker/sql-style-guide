@@ -58,19 +58,19 @@ The goal of this style guide is to improve the readability of SQL queries.
     ```SQL
     /* Good */
     SELECT *
-      FROM (  SELECT a.name, count(1)
-                FROM tablea a
-                JOIN tableb b ON a.id = b.a_id
-            GROUP BY a.name) name_count
+      FROM (  SELECT candidates.name, count(1)
+                FROM candidates
+                JOIN votes ON candidates.id = votes.candidate_id
+            GROUP BY candidates.name) name_count
       JOIN city c ON name_count.name = c.mayor;
     
     /* Bad */
     SELECT *
-      FROM (SELECT a.name, count(1)
-        FROM tablea a
-        JOIN tableb b ON a.id = b.a_id
-        GROUP BY a.name) name_count
-      JOIN city c ON name_count.name = c.mayor;
+      FROM (SELECT candidates.name, count(1)
+        FROM candidates
+        JOIN votes ON candidates.id = votes.candidate_id
+        GROUP BY candidates.name) name_count
+      JOIN city ON name_count.name = city.mayor;
     ```   
 
 ## Structure
@@ -88,3 +88,8 @@ The goal of this style guide is to improve the readability of SQL queries.
       FROM tablename;
     
     ```    
+* Table aliases and column aliases should be descriptive.
+  Much like variable names, "a", "b", "x", etc are not useful outside of short examples.
+
+* Subquery aliases should be even more descriptive.
+  Subqueries effectively create ad-hoc tables in memory.  As such, if you name it "x", then there's absolutely nothing to suggest the intention behind the table to a later maintainer.
