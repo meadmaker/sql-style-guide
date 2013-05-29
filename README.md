@@ -125,4 +125,3 @@ The goal of this style guide is to improve the readability of SQL queries.
   ```
 
   *  Abbreviations don't help in subquery aliases
-
